@@ -39,19 +39,31 @@ test_patient.facilityName="Test PHC"
 currentPrompt = file_content.replace("__PATIENT_DATA__", jsonpickle.encode(test_patient))
 print(currentPrompt)
 
-
-
 ###
 ## Gets the first message to be sent to the patient
 ###
-response = client.models.generate_content(
+chatbot_message = client.models.generate_content(
     model="gemini-2.0-flash", contents=currentPrompt
 )
 
+###
+## Gets the first answer from the patient message to be sent to the patient
+###
+print(chatbot_message.text)
+patient_response = input()
 
+###
+## Does second round of message
+###
+currentPrompt = currentPrompt + " HISTORY of Message: \n " + "BOT: " + chatbot_message.text +" \nPATIENT: "+ patient_response
+chatbot_message = client.models.generate_content(
+    model="gemini-2.0-flash", contents=currentPrompt
+)
 
-print(response.text)
-
-response = input()
+###
+## Gets the first answer from the patient message to be sent to the patient
+###
+print(chatbot_message.text)
+patient_response = input()
 
 
