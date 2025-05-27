@@ -1,5 +1,6 @@
 from google import genai
 from json import JSONEncoder
+from datetime import datetime
 import jsonpickle
 import json
 import os
@@ -36,7 +37,12 @@ class Conversation:
         for currentMessage in self.messages:
             returnString = returnString + currentMessage.author +  ': '  +  currentMessage.messageText + '\n '
         return returnString
-            
+    
+class ConversationAnalyseResult:
+    conversationOver:bool
+    nextAppointmentSet:bool
+    nextApppointmentDate:str
+
 
 
 
@@ -50,6 +56,9 @@ client = genai.Client(api_key=os.environ.get('GEMINI_API_KEY'))
 ###
 with open("./prompt.base.txt", 'r') as file:
     discussion_prompt_file_content = file.read()
+
+with open("./prompt.analyse.txt", 'r') as file:
+    analyse_prompt_file_content = file.read()
 
 
 ###
@@ -72,42 +81,38 @@ def getDiscussionPrompt() -> str:
     returnString = returnString.replace("__CONVERSATION__", currentConversation.dumpConversation())
     return returnString
 
-###
-## Generate customized first prompt for the patient
-###
-#currentPrompt = file_content.replace("__PATIENT_DATA__", test_patient.dumpPatient())
+def getAnalysePrompt() -> str:
+    returnString: str =  analyse_prompt_file_content.replace("__PATIENT_DATA__", test_patient.dumpPatient())
+    returnString = returnString.replace("__CONVERSATION__", currentConversation.dumpConversation())
+    returnString = returnString.replace("__CURRENT_DATE__", datetime.now().strftime("%Y-%m-%d"))
+    return returnString
 
 
-
-    
-
-currentPrompt = getDiscussionPrompt()
 
 ###
 ## Loops until satisfied. Max is 5
 ###
 for i in range(5):
-    ###
+    ## Generate customized prompt for the patient
+    currentPrompt = getDiscussionPrompt()
     ## Gets the message to be sent to the patient
-    ###
     chatbot_message = client.models.generate_content(
         model="gemini-2.0-flash", contents=currentPrompt
     )
     currentConversation.messages.append( Message ('Bot', chatbot_message.text))
-    ###
+    ## Analyse the current State for the conversation
+    analysePrompt = getAnalysePrompt()
+    analyseResponse = client.models.generate_content(
+        model="gemini-2.0-flash", contents=analysePrompt
+    )
+    print(analyseResponse.text)
     ## Gets the answer from the patient 
-    ###
     print(chatbot_message.text)
     patient_response = input()
     currentConversation.messages.append( Message ('Patient', patient_response))
 
-    ###
-    ## Prepares the message for next round
-    ###
-    currentPrompt = getDiscussionPrompt() 
 
-
-
+print(getDiscussionPrompt())
 
 
 
