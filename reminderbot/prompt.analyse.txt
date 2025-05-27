@@ -11,5 +11,7 @@ You should present your answer as a json at this format with the following attri
 * nextAppointmentSet: a boolean value to determine if the date of the next appointment has been agreed uppon
 * nextApppointmentDate: the date of the next appointment, if it has been aggreed uppon. This date should be in the ISO format YYYY-MM-DD. Please consider __CURRENT_DATE__ (expressed in YYYY-MM-DD) as the current date for relative dates
 
+The answer should only be the JSON without any formtting. The raw response should be parseable. the first character of the answer should be "{" and the last one should be "}"
+
 Conversation:
 __CONVERSATION__

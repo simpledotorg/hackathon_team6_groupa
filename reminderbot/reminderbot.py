@@ -39,6 +39,14 @@ class Conversation:
         return returnString
     
 class ConversationAnalyseResult:
+    def __init__(self, d=None):
+        print(d)
+        if d is not None:
+            for key, value in d.items():
+                print(key)
+                print(value)
+                if value is not None and key is not None:
+                 setattr(self, key, value)
     conversationOver:bool
     nextAppointmentSet:bool
     nextApppointmentDate:str
@@ -87,7 +95,14 @@ def getAnalysePrompt() -> str:
     returnString = returnString.replace("__CURRENT_DATE__", datetime.now().strftime("%Y-%m-%d"))
     return returnString
 
-
+def getConversationAnalyseResult() -> ConversationAnalyseResult:
+    analysePrompt = getAnalysePrompt()
+    analyseResponse = client.models.generate_content(
+        model="gemini-2.0-flash", contents=analysePrompt
+    ).text.replace("```json", "").replace("```","")
+    print(analyseResponse)
+    
+    return ConversationAnalyseResult(json.loads(analyseResponse))
 
 ###
 ## Loops until satisfied. Max is 5
@@ -100,12 +115,16 @@ for i in range(5):
         model="gemini-2.0-flash", contents=currentPrompt
     )
     currentConversation.messages.append( Message ('Bot', chatbot_message.text))
+    if (len(currentConversation.messages) > 1):
+        currentResult: ConversationAnalyseResult = getConversationAnalyseResult()
+        if (currentResult.conversationOver):
+            break
+        
     ## Analyse the current State for the conversation
-    analysePrompt = getAnalysePrompt()
-    analyseResponse = client.models.generate_content(
-        model="gemini-2.0-flash", contents=analysePrompt
-    )
-    print(analyseResponse.text)
+    #analysePrompt = getAnalysePrompt()
+    #analyseResponse = client.models.generate_content(
+    #    model="gemini-2.0-flash", contents=analysePrompt
+    #)
     ## Gets the answer from the patient 
     print(chatbot_message.text)
     patient_response = input()
