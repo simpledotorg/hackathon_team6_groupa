@@ -33,7 +33,7 @@ class Conversation:
     def __init__(self, patient):
         self.patient= patient
     def dumpConversation(self) -> str:
-        returnString= ''
+        returnString= ' '
         for currentMessage in self.messages:
             returnString = returnString + currentMessage.author +  ': '  +  currentMessage.messageText + '\n '
         return returnString
@@ -114,20 +114,16 @@ for i in range(5):
     chatbot_message = client.models.generate_content(
         model="gemini-2.0-flash", contents=currentPrompt
     )
-    currentConversation.messages.append( Message ('Bot', chatbot_message.text))
+    ## Checks if we should continue or not
+    currentConversation.messages.append( Message ('Bot', chatbot_message.text.strip("\n ")))
     if (len(currentConversation.messages) > 1):
         currentResult: ConversationAnalyseResult = getConversationAnalyseResult()
         if (currentResult.conversationOver):
             break
-        
-    ## Analyse the current State for the conversation
-    #analysePrompt = getAnalysePrompt()
-    #analyseResponse = client.models.generate_content(
-    #    model="gemini-2.0-flash", contents=analysePrompt
-    #)
+
     ## Gets the answer from the patient 
     print(chatbot_message.text)
-    patient_response = input()
+    patient_response = input().strip("\n ")
     currentConversation.messages.append( Message ('Patient', patient_response))
 
 
