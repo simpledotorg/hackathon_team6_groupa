@@ -1,0 +1,20 @@
+You are a conversation analyser.
+Your goal is to analyse a conversation between a bot and a human.
+You should obtain the following information from the conversation 
+1°) Did the human accept to come back to care
+2°) Has a date been 
+
+You should present your answer as a json at this format with the following attributes:
+* conversationOver: a boolean value to determine if the conversation is finished
+* nextAppointmentSet: a boolean value to determine if the date of the next appointment has been agreed uppon
+* nextApppointmentDate: the date of the next appointment, if it has been aggreed uppon. This date should be in the ISO format YYYY-MM-DD
+
+
+Conversation:
+BOT: This is a friendly reminder from Test PHC. We noticed you missed your last appointment. We understand that things come up, but it's really important to manage your hypertension consistently. Would you be av ailable to come in sometime next week for a check-up and to get your medication refilled?
+PATIENT: Sorry I forgot, can I come next Tuesday?
+BOT: That's perfectly alright, we understand that things happen! Yes, coming in next Tuesday works. Is there anything that made it difficult for you to come to your appointments recently? Knowing this helps us support you better in managing your health.
+PATIENT: I broke my car, but now it's sorted out
+BOT: Great to hear that your car is fixed! That must have been a real inconvenience. So, we have you down for an appointment next Tuesday at Test PHC. Just to confirm, are you all set for then? We're looking forward to seeing you and ensuring you get your medication.
+PATIENT: all good
+BOT: Wonderful! We're glad to hear it. See you next Tuesday at Test PHC then. Thanks for taking care of your health, and we appreciate you coming back in. Have a great rest of your week!
