@@ -1,16 +1,23 @@
 from google import genai
 from json import JSONEncoder
 from datetime import datetime
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+from slack_sdk.socket_mode import SocketModeClient
+from slack_sdk.socket_mode.request import SocketModeRequest
+from slack_sdk.socket_mode.response import SocketModeResponse
+from threading import Event
 import jsonpickle
 import json
 import os
+import time
 
 ###
 ## Creates the patient clas. TODO: should be in a different script/package
 ###
 
 class Patient:
-    eggs = None
+    name = None
     age = None
     sex = None
     prefered_language= "English"
@@ -53,6 +60,10 @@ class ConversationAnalyseResult:
 
 
 
+###
+## Slack client. Todo: make it an interface
+###
+slackClient = WebClient(token=os.environ.get('SLACK_TOKEN'))
 
 ###
 ## Connects to Google Gemini. TODO: make it an interface
@@ -73,14 +84,17 @@ with open("./prompt.analyse.txt", 'r') as file:
 ## Loads the patient. TODO : take it from an interface, ideally from a list
 ###
 test_patient = Patient()
-test_patient.name ="Arnaud"
+test_patient.email= "ademarcq@resolvetosavelives.org" ## "msilva.consultant@resolvetosavelives.org"
+test_patient.name = "Arnaud"
 test_patient.age = 43
 test_patient.sex= "male"
 test_patient.prefered_language="English"
 test_patient.facilityName="Test PHC"
 currentConversation = Conversation(test_patient);
 
+slack_user_id = slackClient.users_lookupByEmail(email=test_patient.email)["user"]["id"]
 
+print(test_patient.dumpPatient())
 ###
 ## Defines a few helper functions
 ###
@@ -113,17 +127,33 @@ for i in range(5):
     ## Gets the message to be sent to the patient
     chatbot_message = client.models.generate_content(
         model="gemini-2.0-flash", contents=currentPrompt
-    )
+    ).text.strip("\n ")
+    slackResponse = slackClient.chat_postMessage(
+            channel=slack_user_id,
+            text=chatbot_message)
+    print(slackResponse)
+    dmChannelId = slackResponse["channel"]
     ## Checks if we should continue or not
-    currentConversation.messages.append( Message ('Bot', chatbot_message.text.strip("\n ")))
+    currentConversation.messages.append( Message ('Bot', chatbot_message))
     if (len(currentConversation.messages) > 1):
         currentResult: ConversationAnalyseResult = getConversationAnalyseResult()
         if (currentResult.conversationOver):
             break
-
     ## Gets the answer from the patient 
-    print(chatbot_message.text)
-    patient_response = input().strip("\n ")
+    print(chatbot_message)
+    patient_response= None
+    while (patient_response is None):
+        slackPatientAnswer = slackClient.conversations_history(
+            channel=dmChannelId,
+            inclusive=True,
+            limit=1
+            )
+        lastMessage = slackPatientAnswer["messages"][0]
+        if(lastMessage["user"] == slack_user_id) :
+            patient_response = lastMessage["text"]
+            print(lastMessage)
+        else:
+            time.sleep(3)
     currentConversation.messages.append( Message ('Patient', patient_response))
 
 
