@@ -1,11 +1,11 @@
 ### Goal
 
-We need a chatbot that will
-- contact a given patient on slack
-- conduct a discussion and try to convince the patient to:
+We made a chatbot that
+- contacts a given patient on slack
+- conducts a discussion and try to convince the patient to:
   - come back to care
   - agree on a date for a new appointment
-- After each interaction, evaluate if the conversation is over or not
+- After each interaction, evaluates if the conversation is over or not
 - Once the conversation is over, output a machine-usable json document containing:
   -  nextAppointmentSet (true/false)
   -  nextApppointmentDate (date of next appointment)
