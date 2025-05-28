@@ -81,21 +81,12 @@ with open("./prompt.base.txt", 'r') as file:
 with open("./prompt.analyse.txt", 'r') as file:
     analyse_prompt_file_content = file.read()
 
-
 ###
 ## Loads the patient. TODO : take it from an interface, ideally from a list
 ###
 with open(sys.argv[1]) as patient_file:
   file_content = patient_file.read()
 patient_dict = json.loads(file_content)
-
-#test_patient = Patient()
-#test_patient.email= "ademarcq@resolvetosavelives.org" ## "msilva.consultant@resolvetosavelives.org"
-#test_patient.name = "Arnaud"
-#test_patient.age = 43
-#test_patient.sex= "male"
-#test_patient.prefered_language="English"
-#test_patient.facilityName="Test PHC"
 currentConversation = Conversation(patient_dict);
 slack_user_id = slackClient.users_lookupByEmail(email=patient_dict["email"])["user"]["id"]
 
@@ -126,7 +117,7 @@ def getConversationAnalyseResult() -> ConversationAnalyseResult:
 ###
 ## Loops until satisfied. Max is 5
 ###
-for i in range(5):
+for i in range(10):
     ## Generate customized prompt for the patient
     currentPrompt = getDiscussionPrompt()
     ## Gets the message to be sent to the patient
