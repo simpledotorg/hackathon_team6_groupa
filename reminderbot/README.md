@@ -68,7 +68,27 @@ We've got two prompts:
     - has the patient agreed to visit ?
     - when ?
 
-### Examples of conversation:
+### Examples of chats:
+
+
+#### Conversation:
+```
+Conversation:
+ Bot: Hi Vivek, we noticed you missed your last appointment at Test PHC. It's important to manage your hypertension, so would you be available to come in sometime next week for a check-up and to get your medication?
+ Patient: give me money, i ll come
+ Bot: Vivek, I understand that you might be facing some difficulties. Unfortunately, I cannot provide financial assistance. However, your health is very important, and managing your hypertension is crucial. Would you be able to come in for your appointment if you could find a ride with a family member or use public transportation? We really want to see you back at Test PHC next week.
+ Patient: I will only come if dr arnaud is present
+ Bot: Vivek, I understand that you prefer to see Dr. Arnaud. While I can't guarantee his availability, I can assure you that all of our doctors at Test PHC are qualified to manage your hypertension. Would you be willing to come in next week, and we can check if Dr. Arnaud is available then? Your health is our priority.
+ Patient: Ok i will come. can you assure me that you will fill my prescription?
+ Bot: Vivek, I'm glad to hear you're willing to come in! Yes, I can assure you that we will fill your prescription during your visit. How about next week, would Monday or Tuesday work for you?
+ Patient: When is my visit date?
+ Bot: You were scheduled for the 16th. Since you missed it, would you like to come on Monday, the 22nd, or Tuesday, the 23rd?
+ Patient: I will come monday
+ Bot: Great! We'll book you in for Monday the 22nd. We look forward to seeing you then at Test PHC. Have a good day!
+```
+
+> [!WARNING]
+> It proposed a date in the past. This lead to modifying the prompt to add the "obvious" constraint that appointments must be in the future
 
 
 #### Conversation:
@@ -87,5 +107,7 @@ We've got two prompts:
  Patient: Tuesday
  Bot: Perfect Daniel. So Tuesday it is. Please make sure to call Test PHC beforehand to confirm they are open until 6 PM. See you then!
 ```
+
+
 
 
