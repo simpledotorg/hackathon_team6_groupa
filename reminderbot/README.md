@@ -70,6 +70,41 @@ We've got two prompts:
 
 ### Examples of chats:
 
+#### Conversation:
+```
+Conversation:
+ Bot: Hi Tony, we noticed you missed your last appointment at Test PHC. It's important to manage your hypertension, so would you be available to come in sometime next week for a check-up and to get your medication?
+ Patient: I'm not sure, i'll try
+ Bot: Okay Tony. Would either Monday, Tuesday, or Wednesday work for you to come in next week?
+ Patient: I can come Tuesday but don't have my scooter
+ Bot: I understand, Tony. Since you can come on Tuesday but are having trouble with transportation, would it be possible for a friend or family member to give you a ride? Alternatively, is public transportation an option for you to get to Test PHC? Your health is very important, and we want to make sure you get the care you need.
+ Patient: I'll try to get my scooter
+ Bot: That sounds good, Tony. So, can we tentatively pencil you in for Tuesday then? Keeping your blood pressure under control is really important. If you can't get your scooter fixed, please let us know, and we can explore other options together.
+ Patient: okay sure
+ Bot: Great, Tony! We'll book you in for Tuesday at Test PHC then. Please come so we can check on you. See you then!
+```
+
+> [!NOTE]
+> Worked !
+
+
+#### Conversation:
+```
+Conversation:
+ Bot: Tony ji, Test PHC mein aapki agli appointment ke liye aapko kab aana theek rahega? Kya aapko Thursday ya Friday ko aana theek rahega? Hum aapki sehat ka khayal rakhna chahte hain.
+ Patient: han
+ Bot: Tony ji, bahut achchha! Kya aap Thursday ko aana pasand karenge?
+ Patient: Nahi Tuesday?
+ Bot: Tony ji, Tuesday ko appointments book hain. Kya aap Thursday ya Friday ko aa sakte hain? Aapki sehat humare liye bahut zaroori hai.
+ Patient: okay Friday try sakta
+ Bot: Tony ji, Friday ko aapko aane mein koi dikkat to nahi hogi na? Agar koi pareshani hai, to humein batayein, hum madad karne ke liye tayyar hain. Aapki sehat sabse important hai.
+ Patient: okay
+ Bot: Tony ji, bahut achchha! To hum aapko Friday ke liye book kar dein? Aapki sehat humare liye bahut important hai.
+ Patient: han
+```
+> [!WARNING]
+> It was not able to understand the date that the Patient agreed uppon. Doing this in some non-English language might require additional work.
+
 
 #### Conversation:
 ```
@@ -107,6 +142,9 @@ Conversation:
  Patient: Tuesday
  Bot: Perfect Daniel. So Tuesday it is. Please make sure to call Test PHC beforehand to confirm they are open until 6 PM. See you then!
 ```
+
+> [!NOTE]
+> Worked !
 
 
 
