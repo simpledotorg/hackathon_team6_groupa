@@ -81,7 +81,41 @@ Conversation:
 > [!NOTE]
 > Worked !
 
+#### Conversation:
+
+Conversation:
+ Bot: Hola Manu, soy del centro de salud Test PHC. Notamos que no has podido asistir a tu cita mensual para el control de la presión arterial. Es muy importante que vengas para que podamos medir tu presión y darte tus medicamentos. ¿Podrías venir la semana que viene? Tu salud es lo primero.
+ Patient: Hola
+ Bot: Hola Manu, gracias por responder. Entiendo que a veces las cosas se complican. ¿Te parece bien si hablamos un poco para ver qué día de la semana que viene te quedaría mejor para venir al centro de salud Test PHC? Es importante para tu salud que no te quedes sin tus medicamentos.
+ Patient: No estoy seguro de si podré
+ Bot: Hola Manu, entiendo que no estés seguro, pero es muy importante que vengas a recoger tus medicamentos para la presión arterial. ¿Hay algo en particular que te impida venir la semana que viene? Tal vez podamos encontrar una solución juntos. Tu salud es nuestra prioridad.
+ Patient: Qué tal el lunes que viene?
+ Bot: ¡Hola Manu! El lunes me parece genial. ¿Te viene bien venir por la mañana o por la tarde? Es importante que vengas para que podamos controlar tu presión arterial y darte tus medicamentos.
+ Patient: Por la mañana
+ Bot: Hola Manu, ¡perfecto! Te esperamos el lunes por la mañana en el centro de salud Test PHC. Recuerda que es importante para tu salud. ¡Que tengas un buen día!
  
+> [!NOTE]
+> Worked !
+
+> [!TIP]
+> We Noticed it says "Hola Manu" at the start of each message, which sounds weird. It led to adding "**Avoid Greetings after the first message**" to the prompt
+
+#### Conversation:
+```
+Conversation:
+ Bot: Hi Varshana, this is a friendly reminder from Test PHC about your missed hypertension appointment. We understand that things come up, but it's important to manage your blood pressure regularly. Would you be available to come in sometime next week for a check-up and to get your medication?
+ Patient: No I'm busy
+ Bot: Hi Varshana, I understand you're busy. However, keeping your blood pressure under control is really important for your health. Could you possibly spare some time the week after next to come in for your appointment at Test PHC?
+ Patient: No
+ Bot: Hi Varshana, I understand you're still busy. Your health is our priority, and managing your hypertension is crucial. Would either of the last two weeks of this month work for you to come in for a quick check-up at Test PHC?
+ Patient: I can come next month
+ Bot: Hi Varshana, that's great to hear you can come next month! Would the first week of next month work for you to come to Test PHC for your hypertension check-up and medication?
+ Patient: I can come on 29 June
+ Bot: Hi Varshana, June 29th works! We'll pencil you in for your hypertension check-up and medication pick-up at Test PHC on June 29th. We look forward to seeing you then! Have a great day!
+```
+> [!NOTE]
+> Worked !
+
 #### Conversation:
 ```
 Conversation:
