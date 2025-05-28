@@ -1,4 +1,4 @@
-### Goal
+# Goal
 
 We made a chatbot that
 - contacts a given patient on slack
@@ -10,10 +10,10 @@ We made a chatbot that
   -  nextAppointmentSet (true/false)
   -  nextApppointmentDate (date of next appointment)
 
-### Out of scope
+# Out of scope
 Given the limited time for this POC, we tried to keep the scope minimal and focused on the AI driven chatbot. Input and output integration has been abstracted as follows
 
-#### Input
+## Input
 Fetching the patient information is out of scope, we'll use `json` files (`patient.XXX.json`) as as substitute. This is given as a command line argument to the script.
 
 
@@ -31,7 +31,7 @@ Fetching the patient information is out of scope, we'll use `json` files (`patie
 > Note that the `prefered_language` is respected. We tried English, French, Spanish, Hindi, Hindi with English letters (parsing prompt performed poorly and was not able to get the dates)
 
 
-#### Output
+## Output
 Processing the output is out of scope as well. Output behaviour will be something like 
 - if the patient agreed to visit, create a new appointment and mark the patient as "agreed to visit"
 - if not, flag the patient as needing to be called by a human HCW
@@ -54,13 +54,13 @@ An unsuccessful discussion will output something like that
 }
 ```
 
-### Technical stack
+# Technical stack
 - Script is developped in Python
    - Script is relatively small =>  150 lines including comments !
 - Web API for **Google Gemini** is used
 - Web API for **Slack** is used
 
-### AI involvement
+# AI involvement
 We've got two prompts:
 - one prompt for the dicussion
 - one for analysing the discussion and generating the output, that's aimed at answering these 3 questions:
@@ -68,7 +68,7 @@ We've got two prompts:
     - has the patient agreed to visit ?
     - when ?
 
-### Examples of chats:
+# Examples of chats:
 
 ```
 Conversation:
@@ -81,7 +81,7 @@ Conversation:
 > [!NOTE]
 > Worked !
 
-#### Conversation:
+## Conversation:
 
 Conversation:
  Bot: Hola Manu, soy del centro de salud Test PHC. Notamos que no has podido asistir a tu cita mensual para el control de la presión arterial. Es muy importante que vengas para que podamos medir tu presión y darte tus medicamentos. ¿Podrías venir la semana que viene? Tu salud es lo primero.
@@ -100,7 +100,7 @@ Conversation:
 > [!TIP]
 > We Noticed it says "Hola Manu" at the start of each message, which sounds weird. It led to adding "**Avoid Greetings after the first message**" to the prompt
 
-#### Conversation:
+## Conversation:
 ```
 Conversation:
  Bot: Hi Varshana, this is a friendly reminder from Test PHC about your missed hypertension appointment. We understand that things come up, but it's important to manage your blood pressure regularly. Would you be available to come in sometime next week for a check-up and to get your medication?
@@ -116,7 +116,7 @@ Conversation:
 > [!NOTE]
 > Worked !
 
-#### Conversation:
+## Conversation:
 ```
 Conversation:
  Bot: Hi Tony, we noticed you missed your last appointment at Test PHC. It's important to manage your hypertension, so would you be available to come in sometime next week for a check-up and to get your medication?
@@ -134,7 +134,7 @@ Conversation:
 > Worked !
 
 
-#### Conversation:
+## Conversation:
 ```
 Conversation:
  Bot: Tony ji, Test PHC mein aapki agli appointment ke liye aapko kab aana theek rahega? Kya aapko Thursday ya Friday ko aana theek rahega? Hum aapki sehat ka khayal rakhna chahte hain.
@@ -152,7 +152,7 @@ Conversation:
 > It was not able to understand the date that the Patient agreed uppon. Doing this in some non-English language might require additional work.
 
 
-#### Conversation:
+## Conversation:
 ```
 Conversation:
  Bot: Hi Vivek, we noticed you missed your last appointment at Test PHC. It's important to manage your hypertension, so would you be available to come in sometime next week for a check-up and to get your medication?
@@ -172,7 +172,7 @@ Conversation:
 > It proposed a date in the past. This lead to modifying the prompt to add the "obvious" constraint that appointments must be in the future
 
 
-#### Conversation:
+## Conversation:
 ```
  Bot: Hi Daniel, we noticed you missed your last appointment at Test PHC. It's important to manage your hypertension, so would you be available to come in sometime next week for a check-up and to get your medication?
  Patient: Sorry, I'm busy
