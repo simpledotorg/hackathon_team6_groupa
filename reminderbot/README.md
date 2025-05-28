@@ -70,6 +70,18 @@ We've got two prompts:
 
 ### Examples of chats:
 
+```
+Conversation:
+ Bot: Hi Arnaud, we noticed you missed your last appointment at Test PHC. It's important to manage your high blood pressure. Would you be available to come in next week for a check-up and to get your medication? Your health is our priority.
+ Patient: My goldfish ate my cat. I could not come
+ Bot: Hi Arnaud, I understand things come up. However, managing your high blood pressure is really important for your health. Would you be free to come in the week after next for your check-up and medication refill?
+ Patient: I can come next Wednesday
+ Bot: Great! Next Wednesday will work. We look forward to seeing you then. Please prioritize your health and we'll see you at Test PHC. Have a great day!
+```
+> [!NOTE]
+> Worked !
+
+ 
 #### Conversation:
 ```
 Conversation:
@@ -146,6 +158,8 @@ Conversation:
 > [!NOTE]
 > Worked !
 
+> [!TIP]
+> We should probably make opening hours/days part of the prompt. A bot should be able to answer this kind of questions
 
 
 
