@@ -11,12 +11,14 @@ import jsonpickle
 import json
 import os
 import time
+import sys
 
 ###
 ## Creates the patient clas. TODO: should be in a different script/package
 ###
 
 class Patient:
+    email:str = None
     name = None
     age = None
     sex = None
@@ -35,7 +37,7 @@ class Message:
 
 
 class Conversation:
-    patient: Patient
+    patient: None
     messages= []
     def __init__(self, patient):
         self.patient= patient
@@ -83,28 +85,31 @@ with open("./prompt.analyse.txt", 'r') as file:
 ###
 ## Loads the patient. TODO : take it from an interface, ideally from a list
 ###
-test_patient = Patient()
-test_patient.email= "ademarcq@resolvetosavelives.org" ## "msilva.consultant@resolvetosavelives.org"
-test_patient.name = "Arnaud"
-test_patient.age = 43
-test_patient.sex= "male"
-test_patient.prefered_language="English"
-test_patient.facilityName="Test PHC"
-currentConversation = Conversation(test_patient);
+with open(sys.argv[1]) as patient_file:
+  file_content = patient_file.read()
+patient_dict = json.loads(file_content)
 
-slack_user_id = slackClient.users_lookupByEmail(email=test_patient.email)["user"]["id"]
+#test_patient = Patient()
+#test_patient.email= "ademarcq@resolvetosavelives.org" ## "msilva.consultant@resolvetosavelives.org"
+#test_patient.name = "Arnaud"
+#test_patient.age = 43
+#test_patient.sex= "male"
+#test_patient.prefered_language="English"
+#test_patient.facilityName="Test PHC"
+currentConversation = Conversation(patient_dict);
+slack_user_id = slackClient.users_lookupByEmail(email=patient_dict["email"])["user"]["id"]
 
-print(test_patient.dumpPatient())
+print(str(patient_dict))
 ###
 ## Defines a few helper functions
 ###
 def getDiscussionPrompt() -> str:
-    returnString: str =  discussion_prompt_file_content.replace("__PATIENT_DATA__", test_patient.dumpPatient())
+    returnString: str =  discussion_prompt_file_content.replace("__PATIENT_DATA__", str(patient_dict))
     returnString = returnString.replace("__CONVERSATION__", currentConversation.dumpConversation())
     return returnString
 
 def getAnalysePrompt() -> str:
-    returnString: str =  analyse_prompt_file_content.replace("__PATIENT_DATA__", test_patient.dumpPatient())
+    returnString: str =  analyse_prompt_file_content.replace("__PATIENT_DATA__", str(patient_dict))
     returnString = returnString.replace("__CONVERSATION__", currentConversation.dumpConversation())
     returnString = returnString.replace("__CURRENT_DATE__", datetime.now().strftime("%Y-%m-%d"))
     return returnString
